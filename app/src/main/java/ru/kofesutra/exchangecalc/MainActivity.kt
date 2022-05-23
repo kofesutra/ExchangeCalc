@@ -40,12 +40,13 @@ class MainActivity : AppCompatActivity() {
             swipeRefresh.isRefreshing = true
             Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
 
-            runLoader()
+          //  runLoader()
+            refreshData()
 
             swipeRefresh.postDelayed(Runnable {
                 swipeRefresh.setRefreshing(false)
                 // говорим о том, что собираемся закончить
-                Toast.makeText(applicationContext, "Капеццц", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Обновление завершено", Toast.LENGTH_SHORT).show()
             }, 3000)
         }
         swipeRefresh.setColorSchemeResources(
@@ -59,12 +60,28 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
 
-            runLoader()
+          //  runLoader()
+            refreshData()
         }
     } // - private fun runFAB
 
 
     private fun runLoader() {
+        mService.getData().enqueue(object : Callback<List<data>> {
+     override fun onResponse(call: Call<List<data>>, response: Response<List<data>>) {
+                adapter = StartAdapter(baseContext, response.body() as List<data>)
+                adapter.notifyDataSetChanged()
+                var recyclerview_users = findViewById<RecyclerView>(R.id.recView)
+                recyclerview_users.adapter = adapter
+            }
+
+            override fun onFailure(call: Call<List<data>?>, t: Throwable) {
+                Log.d("MainActivity", "onFailure: " + t.message)
+            }
+        })
+    } // - private fun runLoader
+
+    private fun refreshData() {
         mService.getData().enqueue(object : Callback<List<data>> {
             override fun onResponse(call: Call<List<data>>, response: Response<List<data>>) {
                 adapter = StartAdapter(baseContext, response.body() as List<data>)
@@ -77,6 +94,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "onFailure: " + t.message)
             }
         })
-    } // - private fun runLoader
+    } // - private fun refreshData
    // =====================================
 } // - class MainActivity
