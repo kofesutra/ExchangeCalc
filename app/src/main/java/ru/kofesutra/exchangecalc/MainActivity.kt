@@ -17,9 +17,9 @@ import ru.kofesutra.exchangecalc.start.StartAdapter
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mService: ApiService
+    private lateinit var mService: ApiService
     lateinit var adapter: StartAdapter
-    lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,9 +70,9 @@ class MainActivity : AppCompatActivity() {
         mService.getData().enqueue(object : Callback<List<data>> {
      override fun onResponse(call: Call<List<data>>, response: Response<List<data>>) {
                 adapter = StartAdapter(baseContext, response.body() as List<data>)
+                val recyclerviewUsers = findViewById<RecyclerView>(R.id.recView)
+                recyclerviewUsers.adapter = adapter
                 adapter.notifyDataSetChanged()
-                var recyclerview_users = findViewById<RecyclerView>(R.id.recView)
-                recyclerview_users.adapter = adapter
             }
 
             override fun onFailure(call: Call<List<data>?>, t: Throwable) {
@@ -85,9 +85,9 @@ class MainActivity : AppCompatActivity() {
         mService.getData().enqueue(object : Callback<List<data>> {
             override fun onResponse(call: Call<List<data>>, response: Response<List<data>>) {
                 adapter = StartAdapter(baseContext, response.body() as List<data>)
+                val recyclerviewUsers = findViewById<RecyclerView>(R.id.recView)
+                recyclerviewUsers.adapter = adapter
                 adapter.notifyDataSetChanged()
-                var recyclerview_users = findViewById<RecyclerView>(R.id.recView)
-                recyclerview_users.adapter = adapter
             }
 
             override fun onFailure(call: Call<List<data>?>, t: Throwable) {
