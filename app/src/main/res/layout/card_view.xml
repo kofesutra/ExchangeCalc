@@ -52,5 +52,9 @@
             android:gravity="center_vertical"
             android:text="30000"
             android:textSize="20sp" />
+
+
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,9 +1,11 @@
 package ru.kofesutra.exchangecalc
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -30,8 +32,18 @@ class MainActivity : AppCompatActivity() {
         runLoader()
         runFAB()
         runSwipeOn()
+        runButton()
 
     } // - override fun onCreate
+
+    private fun runButton() {
+    val butt = findViewById<Button>(R.id.buttonForw)
+    butt.setOnClickListener {
+        val intent = Intent(this, SecondActivity::class.java)
+        startActivity(intent)
+        Toast.makeText(applicationContext, "Ёп-та!", Toast.LENGTH_SHORT).show()
+    }
+    } // - private fun runButton
 
     private fun runSwipeOn() {
         // SwipeRefresh
@@ -40,8 +52,7 @@ class MainActivity : AppCompatActivity() {
             swipeRefresh.isRefreshing = true
             Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
 
-          //  runLoader()
-            refreshData()
+            runLoader()
 
             swipeRefresh.postDelayed(Runnable {
                 swipeRefresh.setRefreshing(false)
@@ -60,8 +71,8 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
 
-          //  runLoader()
-            refreshData()
+            runLoader()
+
         }
     } // - private fun runFAB
 
@@ -81,19 +92,5 @@ class MainActivity : AppCompatActivity() {
         })
     } // - private fun runLoader
 
-    private fun refreshData() {
-        mService.getData().enqueue(object : Callback<List<data>> {
-            override fun onResponse(call: Call<List<data>>, response: Response<List<data>>) {
-                adapter = StartAdapter(baseContext, response.body() as List<data>)
-                val recyclerviewUsers = findViewById<RecyclerView>(R.id.recView)
-                recyclerviewUsers.adapter = adapter
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onFailure(call: Call<List<data>?>, t: Throwable) {
-                Log.d("MainActivity", "onFailure: " + t.message)
-            }
-        })
-    } // - private fun refreshData
    // =====================================
 } // - class MainActivity
