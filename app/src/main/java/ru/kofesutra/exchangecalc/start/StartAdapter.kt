@@ -1,6 +1,7 @@
 package ru.kofesutra.exchangecalc.start
 
 import android.content.Context
+import android.text.TextUtils.indexOf
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,8 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
     override fun onBindViewHolder(holder: StartViewHolder, position: Int) {
         // 7) передаём в холдер данные из data
        // holder.itemView.price.text = listStart[position].USD
-        holder.price.text = listStart[position].price
+        val indexPlus = listStart[position].price.indexOf('.')
+        holder.price.text = listStart[position].price.substring(0 ..indexPlus+5)
         holder.nameOf.text = listStart[position].symbol
 
         // Обработкик SVG
