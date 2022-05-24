@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import retrofit2.Call
@@ -29,24 +33,70 @@ class MainActivity : AppCompatActivity() {
 
         mService = ApiCommon.retrofitService
 
+//        this.setTitle("TREWQ")
+
+        supportActionBar?.apply {
+//            title = "Display Logo On ActionBar"
+//            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            setLogo(R.drawable.ic_launcher_foreground)
+            setDisplayUseLogoEnabled(true)
+        }
+
         runLoader()
         runFAB()
         runSwipeOn()
-        runButton()
+//        runButton()
+
+
+//        val cardView = findViewById<CardView>(R.id.cardViewID)
+//        cardView.setOnClickListener {
+////        val intent = Intent(this, SecondActivity::class.java)
+////        startActivity(intent)
+////        Toast.makeText(applicationContext, "Кард-ля!", Toast.LENGTH_SHORT).show()
+//        }
 
     } // - override fun onCreate
 
-    private fun runButton() {
-    val butt = findViewById<Button>(R.id.buttonForw)
-    butt.setOnClickListener {
-        val intent = Intent(this, SecondActivity::class.java)
-        startActivity(intent)
-        Toast.makeText(applicationContext, "Ёп-та!", Toast.LENGTH_SHORT).show()
-    }
-    } // - private fun runButton
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    } // - override fun onCreateOptionsMenu
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_about -> {
+                Toast.makeText(applicationContext, "Обо!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ThirdActivity::class.java)
+
+//                intent.putExtra(ThirdActivity.test,"888")
+                startActivity(intent)
+                return true
+            }
+            R.id.action_nothing -> {
+                Toast.makeText(applicationContext, "Ничего не происходит", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SecondActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    } // - override fun onOptionsItemSelected
+
+//    private fun runButton() {
+//    val butt = findViewById<Button>(R.id.buttonForw)
+//    butt.setOnClickListener {
+//        val intent = Intent(this, SecondActivity::class.java)
+//        startActivity(intent)
+//        Toast.makeText(applicationContext, "Ёп-та!", Toast.LENGTH_SHORT).show()
+//    }
+//    } // - private fun runButton
+
 
     private fun runSwipeOn() {
-        // SwipeRefresh
         swipeRefresh = findViewById(R.id.swipeRefresh)
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
@@ -56,14 +106,15 @@ class MainActivity : AppCompatActivity() {
 
             swipeRefresh.postDelayed(Runnable {
                 swipeRefresh.setRefreshing(false)
-                // говорим о том, что собираемся закончить
                 Toast.makeText(applicationContext, "Обновление завершено", Toast.LENGTH_SHORT).show()
             }, 3000)
         }
         swipeRefresh.setColorSchemeResources(
-            android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-            android.R.color.holo_orange_light, android.R.color.holo_red_light
-        ) // - SwipeRefresh
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
     } // - private fun runSwipeOn
 
     private fun runFAB() {
@@ -75,7 +126,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     } // - private fun runFAB
-
 
     private fun runLoader() {
         mService.getData().enqueue(object : Callback<List<data>> {

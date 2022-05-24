@@ -1,17 +1,23 @@
 package ru.kofesutra.exchangecalc.start
 
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils.indexOf
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.load
+import ru.kofesutra.exchangecalc.MainActivity
 import ru.kofesutra.exchangecalc.R
+import ru.kofesutra.exchangecalc.SecondActivity
+import ru.kofesutra.exchangecalc.ThirdActivity
 import ru.kofesutra.exchangecalc.model.data
 
 class StartAdapter(private val context: Context, private val listStart: List<data>): RecyclerView.Adapter<StartAdapter.StartViewHolder>() {
@@ -31,12 +37,15 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
         val price: TextView = itemView.findViewById(R.id.item_price) // Отображение цены
         val nameOf: TextView = itemView.findViewById(R.id.item_name) // Отображение названия
         val logo: ImageView = itemView.findViewById(R.id.item_logo) // Отображение картинок
+
+
     } // - class StartViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StartViewHolder {
 // 5)
         var itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
         return  StartViewHolder(itemView)
+
     } // - override fun onCreateViewHolder
 
     override fun onBindViewHolder(holder: StartViewHolder, position: Int) {
@@ -45,6 +54,7 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
         val indexPlus = listStart[position].price.indexOf('.')
         holder.price.text = listStart[position].price.substring(0 ..indexPlus+5)
         holder.nameOf.text = listStart[position].symbol
+        val toClicked = listStart[position]
 
         // Обработкик SVG
         val svgImageLoader = ImageLoader.Builder(context)
@@ -58,11 +68,19 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
             size(80, 80)
         }
 
+        holder.itemView.setOnClickListener(View.OnClickListener() {
+                Toast.makeText(context, "Clicked $toClicked", Toast.LENGTH_SHORT).show()
+//        val intent = Intent(this, SecondActivity::class.java)
+//        startActivity(intent)
+        })
+
     } // - override fun onBindViewHolder
 
     override fun getItemCount(): Int {
 // 4) как всегда
         return listStart.size
     }
+
+
 
 } // - class StartAdapter
