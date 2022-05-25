@@ -9,8 +9,6 @@ class ThirdActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_third)
 
-//        this.setTitle("TREWQ")
-
 //        val toolbar: ActionBar? = supportActionBar
 //        if (toolbar != null) {
 //            val cal: Calendar = Calendar.getInstance()
@@ -29,12 +27,10 @@ class ThirdActivity : AppCompatActivity() {
             setLogo(R.drawable.ic_launcher_foreground)
             setDisplayUseLogoEnabled(true)
         }
-
-    }
+    } // - override fun onCreate
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
-
-}
+} // - class ThirdActivity

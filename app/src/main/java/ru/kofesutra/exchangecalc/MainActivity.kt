@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import retrofit2.Call
@@ -33,8 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         mService = ApiCommon.retrofitService
 
-//        this.setTitle("TREWQ")
-
         supportActionBar?.apply {
 //            title = "Display Logo On ActionBar"
 //            setDisplayHomeAsUpEnabled(true)
@@ -46,11 +41,7 @@ class MainActivity : AppCompatActivity() {
         runLoader()
         runFAB()
         runSwipeOn()
-//        runButton()
-
     } // - override fun onCreate
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
@@ -63,8 +54,6 @@ class MainActivity : AppCompatActivity() {
             R.id.action_about -> {
                 Toast.makeText(applicationContext, "Обо!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, ThirdActivity::class.java)
-
-//                intent.putExtra(ThirdActivity.test,"888")
                 startActivity(intent)
                 return true
             }
@@ -78,24 +67,12 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     } // - override fun onOptionsItemSelected
 
-//    private fun runButton() {
-//    val butt = findViewById<Button>(R.id.buttonForw)
-//    butt.setOnClickListener {
-//        val intent = Intent(this, SecondActivity::class.java)
-//        startActivity(intent)
-//        Toast.makeText(applicationContext, "Ёп-та!", Toast.LENGTH_SHORT).show()
-//    }
-//    } // - private fun runButton
-
-
     private fun runSwipeOn() {
         swipeRefresh = findViewById(R.id.swipeRefresh)
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
             Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
-
             runLoader()
-
             swipeRefresh.postDelayed(Runnable {
                 swipeRefresh.setRefreshing(false)
                 Toast.makeText(applicationContext, "Обновление завершено", Toast.LENGTH_SHORT).show()
@@ -113,9 +90,7 @@ class MainActivity : AppCompatActivity() {
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener {
             Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
-
             runLoader()
-
         }
     } // - private fun runFAB
 
@@ -127,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                 recyclerviewUsers.adapter = adapter
                 adapter.notifyDataSetChanged()
             }
-
             override fun onFailure(call: Call<List<data>?>, t: Throwable) {
                 Log.d("MainActivity", "onFailure: " + t.message)
             }

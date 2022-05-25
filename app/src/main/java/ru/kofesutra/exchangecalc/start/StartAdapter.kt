@@ -33,24 +33,21 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
         val price: TextView = itemView.findViewById(R.id.item_price) // Отображение цены
         val nameOf: TextView = itemView.findViewById(R.id.item_name) // Отображение названия
         val logo: ImageView = itemView.findViewById(R.id.item_logo) // Отображение картинок
-
     } // - class StartViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StartViewHolder {
 // 5)
-        var itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
         return  StartViewHolder(itemView)
     } // - override fun onCreateViewHolder
 
     override fun onBindViewHolder(holder: StartViewHolder, position: Int) {
         // 7) передаём в холдер данные из data
-       // holder.itemView.price.text = listStart[position].USD
         val indexPlus = listStart[position].price.indexOf('.')
         holder.price.text = listStart[position].price.substring(0 ..indexPlus+5)
         holder.nameOf.text = listStart[position].symbol
         val logoTemp: String = listStart[position].logo_url
-
-//        val toClicked = listStart[position]
+        val indexPlusHigh = listStart[position].high.indexOf('.')
 
         // Обработкик SVG
         val svgImageLoader = ImageLoader.Builder(context)
@@ -60,34 +57,22 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
             size(80, 80)
         } // - Обработкик SVG Binding SVG
 
-//        var positionOf = getAbsoluteAdapterPosition.listStart[position]
-
         holder.itemView.setOnClickListener(View.OnClickListener() {
 //                Toast.makeText(holder.itemView.context, "Clicked $toClicked", Toast.LENGTH_SHORT).show()
         val intent = Intent(holder.itemView.context, SecondActivity::class.java)
-            intent.putExtra(SecondActivity.intentName, holder.nameOf.text)
             intent.putExtra(SecondActivity.intentPrice, holder.price.text)
+            intent.putExtra(SecondActivity.intentName, holder.nameOf.text)
             intent.putExtra(SecondActivity.intentLogo, logoTemp)
-
-//            intent.putExtra(SecondActivity.intentPosition, positionOf)
-
-//            val logoEx = holder.logo.load(listStart[position].logo_url, svgImageLoader) {
-//                size(80, 80)
-//            }
-
-                intent.putExtra(SecondActivity.intentLogo, logoTemp)
+            intent.putExtra(SecondActivity.intentHigh, listStart[position].high.substring(0 ..indexPlusHigh+5))
+//            intent.putExtra(SecondActivity.intentPercentDay, listStart[position].price_change_pct)
             holder.itemView.context.startActivity(intent)
         })
 
     } // - override fun onBindViewHolder
 
-
-
     override fun getItemCount(): Int {
 // 4) как всегда
         return listStart.size
     }
-
-
 
 } // - class StartAdapter
