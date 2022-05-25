@@ -17,15 +17,16 @@
 
         <ImageView
             android:id="@+id/item_logo_2"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:srcCompat="@tools:sample/avatars"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_margin="1dp"
+            android:layout_margin="10dp"
             android:background="@color/purple_500"/>
 
         <TextView
@@ -42,7 +43,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_margin="1dp"
+            android:layout_margin="10dp"
             android:background="@color/purple_500"/>
 
         <TextView
@@ -53,15 +54,6 @@
             android:gravity="center"
             android:text="30000"
             android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/buttonBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal|bottom"
-            android:text="OK" />
-
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

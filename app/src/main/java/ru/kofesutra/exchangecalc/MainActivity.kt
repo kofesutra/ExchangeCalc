@@ -48,14 +48,6 @@ class MainActivity : AppCompatActivity() {
         runSwipeOn()
 //        runButton()
 
-
-//        val cardView = findViewById<CardView>(R.id.cardViewID)
-//        cardView.setOnClickListener {
-////        val intent = Intent(this, SecondActivity::class.java)
-////        startActivity(intent)
-////        Toast.makeText(applicationContext, "Кард-ля!", Toast.LENGTH_SHORT).show()
-//        }
-
     } // - override fun onCreate
 
 
@@ -77,9 +69,9 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_nothing -> {
-                Toast.makeText(applicationContext, "Ничего не происходит", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, SecondActivity::class.java)
-                startActivity(intent)
+                Toast.makeText(applicationContext, "Ничего не происходит", Toast.LENGTH_LONG).show()
+//                val intent = Intent(this, SecondActivity::class.java)
+//                startActivity(intent)
                 return true
             }
         }

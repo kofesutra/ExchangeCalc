@@ -20,7 +20,7 @@ class ThirdActivity : AppCompatActivity() {
 //        }
 
         val test: TextView = findViewById(R.id.textViewThird)
-        test.text = "Обо, про, за, и прочее"
+        test.text = "Обо, про, за, и прочее\nи всички различни неща"
 
         supportActionBar?.apply {
 //            title = "Display Logo On ActionBar"
