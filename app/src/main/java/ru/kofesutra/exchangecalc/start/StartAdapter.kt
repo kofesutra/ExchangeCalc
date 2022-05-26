@@ -13,9 +13,9 @@ import coil.decode.SvgDecoder
 import coil.load
 import ru.kofesutra.exchangecalc.R
 import ru.kofesutra.exchangecalc.SecondActivity
-import ru.kofesutra.exchangecalc.model.data
+import ru.kofesutra.exchangecalc.model.Data
 
-class StartAdapter(private val context: Context, private val listStart: List<data>): RecyclerView.Adapter<StartAdapter.StartViewHolder>() {
+class StartAdapter(private val context: Context, private val listStart: List<Data>): RecyclerView.Adapter<StartAdapter.StartViewHolder>() {
 // 1) класс StartAdapter наследуем от RecyclerView и добавляем Adapter
     // в треугольных скобках пишем название нашего адаптера, точка, и придумаем название вьюнолдера
     // добавляем ему конструктор ()
@@ -48,6 +48,7 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
         holder.nameOf.text = listStart[position].symbol
         val logoTemp: String = listStart[position].logo_url
         val indexPlusHigh = listStart[position].high.indexOf('.')
+        val highCutted = listStart[position].high.substring(0..indexPlusHigh + 5)
 
         // Обработкик SVG
         val svgImageLoader = ImageLoader.Builder(context)
@@ -57,16 +58,16 @@ class StartAdapter(private val context: Context, private val listStart: List<dat
             size(80, 80)
         } // - Обработкик SVG Binding SVG
 
-        holder.itemView.setOnClickListener(View.OnClickListener() {
+        holder.itemView.setOnClickListener {
 //                Toast.makeText(holder.itemView.context, "Clicked $toClicked", Toast.LENGTH_SHORT).show()
-        val intent = Intent(holder.itemView.context, SecondActivity::class.java)
+            val intent = Intent(holder.itemView.context, SecondActivity::class.java)
             intent.putExtra(SecondActivity.intentPrice, holder.price.text)
             intent.putExtra(SecondActivity.intentName, holder.nameOf.text)
             intent.putExtra(SecondActivity.intentLogo, logoTemp)
-            intent.putExtra(SecondActivity.intentHigh, listStart[position].high.substring(0 ..indexPlusHigh+5))
+            intent.putExtra(SecondActivity.intentHigh, highCutted)
 //            intent.putExtra(SecondActivity.intentPercentDay, listStart[position].price_change_pct)
             holder.itemView.context.startActivity(intent)
-        })
+        } // - holder.itemView.setOnClickListener
 
     } // - override fun onBindViewHolder
 

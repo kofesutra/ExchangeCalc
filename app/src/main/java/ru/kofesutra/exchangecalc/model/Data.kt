@@ -1,6 +1,6 @@
 package ru.kofesutra.exchangecalc.model
 
-data class data(
+data class Data(
     var symbol: String,
     var price: String,
     var logo_url: String,

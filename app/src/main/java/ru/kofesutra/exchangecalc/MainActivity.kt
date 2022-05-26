@@ -15,7 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.kofesutra.exchangecalc.data.api.ApiCommon
 import ru.kofesutra.exchangecalc.data.api.ApiService
-import ru.kofesutra.exchangecalc.model.data
+import ru.kofesutra.exchangecalc.dialogfragment.Dialog42
+import ru.kofesutra.exchangecalc.model.Data
 import ru.kofesutra.exchangecalc.start.StartAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -41,8 +42,10 @@ class MainActivity : AppCompatActivity() {
         runLoader()
         runFAB()
         runSwipeOn()
+
     } // - override fun onCreate
 
+    // Меню на ActionBar (три точки)
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_main, menu)
@@ -58,14 +61,17 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_nothing -> {
-                Toast.makeText(applicationContext, "Ничего не происходит", Toast.LENGTH_LONG).show()
-//                val intent = Intent(this, SecondActivity::class.java)
-//                startActivity(intent)
+//                Toast.makeText(applicationContext, "Ничего не происходит", Toast.LENGTH_LONG).show()
+                val dialogFragment42 = Dialog42()
+                val manager = supportFragmentManager
+                dialogFragment42.show(manager, "dialog42")
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     } // - override fun onOptionsItemSelected
+    // - Меню на ActionBar (три точки)
+
 
     private fun runSwipeOn() {
         swipeRefresh = findViewById(R.id.swipeRefresh)
@@ -95,14 +101,14 @@ class MainActivity : AppCompatActivity() {
     } // - private fun runFAB
 
     private fun runLoader() {
-        mService.getData().enqueue(object : Callback<List<data>> {
-     override fun onResponse(call: Call<List<data>>, response: Response<List<data>>) {
-                adapter = StartAdapter(baseContext, response.body() as List<data>)
+        mService.getData().enqueue(object : Callback<List<Data>> {
+     override fun onResponse(call: Call<List<Data>>, response: Response<List<Data>>) {
+                adapter = StartAdapter(baseContext, response.body() as List<Data>)
                 val recyclerviewUsers = findViewById<RecyclerView>(R.id.recView)
                 recyclerviewUsers.adapter = adapter
                 adapter.notifyDataSetChanged()
             }
-            override fun onFailure(call: Call<List<data>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Data>?>, t: Throwable) {
                 Log.d("MainActivity", "onFailure: " + t.message)
             }
         })
