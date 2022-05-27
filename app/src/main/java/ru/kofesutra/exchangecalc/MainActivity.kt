@@ -7,9 +7,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,12 +25,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mService: ApiService
     lateinit var adapter: StartAdapter
     private lateinit var swipeRefresh: SwipeRefreshLayout
+    lateinit var snackLay: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mService = ApiCommon.retrofitService
+        snackLay = findViewById(R.id.mainView)
 
         supportActionBar?.apply {
 //            title = "Display Logo On ActionBar"
@@ -55,7 +58,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_about -> {
-                Toast.makeText(applicationContext, "Обо!", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(applicationContext, "Обо!", Toast.LENGTH_SHORT).show()
+//                Snackbar.make(snackLay, "Обо!", Snackbar.LENGTH_SHORT).show()
                 val intent = Intent(this, ThirdActivity::class.java)
                 startActivity(intent)
                 return true
@@ -77,11 +81,17 @@ class MainActivity : AppCompatActivity() {
         swipeRefresh = findViewById(R.id.swipeRefresh)
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = true
-            Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
+            Snackbar.make(snackLay, "Обновление данных", Snackbar.LENGTH_LONG)
+                .setBackgroundTint(getColor(android.R.color.holo_orange_dark))
+                .setTextColor(getColor(android.R.color.white))
+//                .setActionTextColor(getColor(android.R.color.white)) // цвет кнопки внутри сообщения
+                .show()
             runLoader()
             swipeRefresh.postDelayed(Runnable {
                 swipeRefresh.setRefreshing(false)
-                Toast.makeText(applicationContext, "Обновление завершено", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(applicationContext, "Обновление завершено", Toast.LENGTH_SHORT).show()
+                Snackbar.make(snackLay,"Обновление завершено",Snackbar.LENGTH_LONG).show()
             }, 3000)
         }
         swipeRefresh.setColorSchemeResources(
@@ -95,7 +105,8 @@ class MainActivity : AppCompatActivity() {
     private fun runFAB() {
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener {
-            Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(applicationContext, "Обновление данных", Toast.LENGTH_SHORT).show()
+            Snackbar.make(snackLay, "Обновление данных",Snackbar.LENGTH_LONG).show()
             runLoader()
         }
     } // - private fun runFAB

@@ -60,6 +60,8 @@ class StartAdapter(private val context: Context, private val listStart: List<Dat
 
         holder.itemView.setOnClickListener {
 //                Toast.makeText(holder.itemView.context, "Clicked $toClicked", Toast.LENGTH_SHORT).show()
+//            Snackbar.make(it, "Очушенеть! :)", Snackbar.LENGTH_LONG).show()
+
             val intent = Intent(holder.itemView.context, SecondActivity::class.java)
             intent.putExtra(SecondActivity.intentPrice, holder.price.text)
             intent.putExtra(SecondActivity.intentName, holder.nameOf.text)
